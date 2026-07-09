@@ -1,0 +1,31 @@
+{
+  "key": "hello-magik",
+  "name": "Hello Magik",
+  "version": 1,
+  "emoji": "✨",
+  "blurb": "A starter button: turn a topic into a short draft, then approve it.",
+  "premise": "a starter Magik Button",
+  "questions": [
+    { "key": "topic", "kind": "short_text", "required": true, "prompt": "What should this be about?" }
+  ],
+  "steps": [
+    {
+      "id": "draft",
+      "kind": "generate",
+      "label": "Draft",
+      "inputs": ["q.topic"],
+      "output": { "contentType": "markdown" },
+      "prompt": "Write a short, punchy draft about {{q.topic}}. Return markdown only.",
+      "fallback": "# {{q.topic}}"
+    },
+    {
+      "id": "review",
+      "kind": "task",
+      "label": "Review & approve",
+      "inputs": ["s.draft.body"],
+      "reviews": ["draft"],
+      "approver": { "role": "owner" },
+      "disposition": "complete"
+    }
+  ]
+}

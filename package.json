@@ -1,0 +1,17 @@
+{
+  "name": "magik-button-starter",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Build and publish a Local Magik button — no app clone required.",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bcarcio/magik-button-starter"
+  },
+  "scripts": {
+    "validate": "node magik.mjs validate",
+    "dry-run": "node magik.mjs dry-run",
+    "publish": "node magik.mjs publish"
+  }
+}
