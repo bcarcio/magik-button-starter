@@ -1,0 +1,10 @@
+You are helping build a Local Magik "Magik Button" in this folder. A button is config — a single
+button.json (questions to ask + ordered steps to run), not code.
+
+Read AGENTS.md (the workflow) and FORMAT.md (the full button.json field reference) in this folder,
+then create/edit button.json accordingly and use the CLI:
+  npm run validate    # schema + graph checks
+  npm run dry-run     # offline preview (stub AI, no sends)
+  npm run publish     # ship it live to the user's workspace
+
+Keep to one clear job per button; re-run validate after every edit to button.json.

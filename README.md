@@ -2,8 +2,9 @@
 
 Build and publish a **[Local Magik](https://localmagik.vercel.app) button** from your terminal —
 no app clone, no database. A button is just a JSON file (`button.json`): a few **questions** to
-ask, and ordered **steps** (AI drafts → a human approval gate → optional send/publish). Pairs
-beautifully with **Claude Code** — see `CLAUDE.md`.
+ask, and ordered **steps** (AI drafts → a human approval gate → optional send/publish). Works with
+**any AI coding assistant** — Claude Code, Cursor, GitHub Copilot, Codex — which auto-read
+`AGENTS.md` / `CLAUDE.md` / `.cursorrules` in this folder. Or edit `button.json` by hand.
 
 ## Get it
 
@@ -21,8 +22,8 @@ cd my-button
 
 ## Build a button
 
-Edit `button.json` (or open this folder in **Claude Code** and say *"build me a button that
-does X"* — it knows the format from `CLAUDE.md`). Then:
+Edit `button.json` (or open this folder in your **AI coding assistant** and say *"build me a
+button that does X"* — it learns the format from `AGENTS.md` + `FORMAT.md`). Then:
 
 ```sh
 npm run validate     # schema + graph checks ("does it build?")
