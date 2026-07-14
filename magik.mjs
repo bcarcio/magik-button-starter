@@ -38,8 +38,10 @@ function loadDef() {
   try { return JSON.parse(readFileSync(p, 'utf8')) } catch (e) { die(`Invalid JSON in ${file}: ${e.message}`) }
 }
 
+let announced = false
 async function api(path, body) {
   if (!KEY) die('MAGIK_API_KEY is not set. Copy .env.example → .env and paste a key from <your app>/settings/api-keys.')
+  if (!announced) { console.log(`→ ${BASE}`); announced = true } // show which instance we're hitting
   let res
   try {
     res = await fetch(`${BASE}${path}`, {
@@ -48,9 +50,18 @@ async function api(path, body) {
       body: JSON.stringify(body),
     })
   } catch (e) {
-    die(`Could not reach ${BASE} (${e.message}). Is Local Magik running there? Set MAGIK_URL.`)
+    die(`Could not reach ${BASE} (${e.message}). Is that your Local Magik URL? Set MAGIK_URL in .env.`)
   }
   const data = await res.json().catch(() => ({}))
+  // A recognized-key failure is almost always a wrong MAGIK_URL, not a bad key — say so.
+  if (res.status === 401) {
+    die(
+      `${BASE} didn't recognize your API key.\n` +
+      `  • If the key is correct, MAGIK_URL is likely wrong — it must point at the app where you minted the key.\n` +
+      `  • You're pointing at: ${BASE}\n` +
+      `  • Hosted on Vercel? Use that URL — not http://localhost:3000.`
+    )
+  }
   return { status: res.status, data }
 }
 
