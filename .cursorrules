@@ -5,6 +5,6 @@ Read AGENTS.md (the workflow) and FORMAT.md (the full button.json field referenc
 then create/edit button.json accordingly and use the CLI:
   npm run validate    # schema + graph checks
   npm run dry-run     # offline preview (stub AI, no sends)
-  npm run publish     # ship it live to the user's workspace
+  npm run publish     # stage it as a Draft — user clicks Go live in Build (add --live to skip staging)
 
 Keep to one clear job per button; re-run validate after every edit to button.json.

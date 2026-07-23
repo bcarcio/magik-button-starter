@@ -11,7 +11,7 @@ you author JSON, then validate → dry-run → publish with the included `magik.
 1. Ask the user what the button should do (or infer it). Write/adjust `button.json`.
 2. `npm run validate` — fix any errors it reports, then repeat until valid.
 3. `npm run dry-run` — sanity-check the flow and the drafted output (uses `answers.json`).
-4. When it looks right, `npm run publish` — it goes live in their workspace.
+4. When it looks right, `npm run publish` — it's staged as a **Draft**; the user clicks **Go live** in the Build section (or publish with `--live` to skip staging).
 
 Keep the loop tight: after any edit to `button.json`, re-run `validate`. The dry-run uses a
 **stub AI** (deterministic placeholder text), so judge the *shape/flow*, not the wording — real

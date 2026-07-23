@@ -5,7 +5,7 @@
 //
 //   node magik.mjs validate  [button.json]   check schema + graph rules
 //   node magik.mjs dry-run   [button.json]   preview offline (stub AI, no sends) using answers.json
-//   node magik.mjs publish   [button.json]   publish it live to your workspace
+//   node magik.mjs publish   [button.json]   stage it as a DRAFT (add --live to go live now)
 //
 // Config (from the environment or a local .env):
 //   MAGIK_API_KEY   mint one at <your app>/settings/api-keys   (required)
@@ -27,7 +27,8 @@ loadDotEnv()
 const [cmd, fileArg] = process.argv.slice(2)
 const KEY = process.env.MAGIK_API_KEY
 const BASE = (process.env.MAGIK_URL || 'http://localhost:3000').replace(/\/$/, '')
-const file = fileArg || 'button.json'
+const file = fileArg && !fileArg.startsWith('--') ? fileArg : 'button.json'
+const LIVE = process.argv.slice(2).includes('--live') // publish straight to live, skipping the draft
 
 const die = (m) => { console.error(`✖ ${m}`); process.exit(1) }
 const ok = (m) => console.log(`✓ ${m}`)
@@ -95,12 +96,13 @@ switch (cmd) {
   }
   case 'publish': {
     const def = loadDef()
-    const { status, data } = await api('/api/buttons', def)
+    const { status, data } = await api(`/api/buttons${LIVE ? '?live=1' : ''}`, def)
     if (status !== 201) {
       const detail = data.details?.length ? `\n  - ${data.details.join('\n  - ')}` : ''
       die(`${data.error || 'publish failed'}${detail}`)
     }
-    ok(`Published "${data.key}" v${data.version} → ${BASE}  (reload My Magik Buttons)`)
+    if (data.live) ok(`Published "${data.key}" v${data.version} LIVE → ${BASE}  (reload My Magik Buttons)`)
+    else ok(`Staged "${data.key}" v${data.version} as a DRAFT → ${BASE}  (go live in the Build section, or re-run with --live)`)
     break
   }
   default:

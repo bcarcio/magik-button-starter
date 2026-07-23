@@ -28,7 +28,7 @@ button that does X"* — it learns the format from `AGENTS.md` + `FORMAT.md`). T
 ```sh
 npm run validate     # schema + graph checks ("does it build?")
 npm run dry-run      # preview offline with a stub AI, using answers.json (no sends)
-npm run publish      # ship it live → it appears in My Magik Buttons
+npm run publish      # stage it as a Draft → go live in the Build section (or: npm run publish -- --live)
 ```
 
 (Or call the CLI directly: `node magik.mjs <validate|dry-run|publish> [file.json]`.)
